@@ -9,17 +9,18 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    /* background: linear-gradient(145deg, #667eea 0%, #764ba2 100%); */
-    background-color: hsla(120, 23%, 43%, 0.533);
+    background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 40%),
+                radial-gradient(circle at 80% 10%, rgba(255,255,255,0.08), transparent 35%),
+                linear-gradient(145deg, #203a43 0%, #2c5364 50%, #0f2027 100%);
     font-family: 'Arial', sans-serif;
 }
 
 .clock-container {
     display: flex;
-    gap: 10px;
+    gap: 14px;
     align-items: center;
     background: rgba(0, 0, 0, 0.3);
-    padding: 40px;
+    padding: 56px 64px;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
@@ -27,8 +28,8 @@ body {
 
 .flip-unit {
     position: relative;
-    width: 80px;
-    height: 120px;
+    width: 140px;
+    height: 200px;
 }
 
 .flip-card {
@@ -67,7 +68,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 72px;
+    font-size: 120px;
     font-weight: bold;
     color: #fff;
     background: linear-gradient(0deg, #2c3e50, #34495e);
@@ -87,7 +88,7 @@ body {
 }
 
 .separator {
-    font-size: 60px;
+    font-size: 110px;
     font-weight: bold;
     color: #fff;
     margin: 0 5px;
@@ -106,21 +107,47 @@ body {
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
     .flip-unit {
-        width: 60px;
-        height: 90px;
+        width: 90px;
+        height: 130px;
     }
 
     .flip-card-front,
     .flip-card-back {
-        font-size: 54px;
+        font-size: 82px;
     }
 
     .separator {
-        font-size: 45px;
+        font-size: 70px;
     }
 
     .clock-container {
-        padding: 30px;
-        gap: 8px;
+        padding: 36px 40px;
+        gap: 10px;
     }
+}
+
+.fullscreen-btn {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 2px solid rgba(255,255,255,0.4);
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.fullscreen-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.7);
+}
+
+.fullscreen-btn:active {
+    transform: translateY(0) scale(0.99);
 }

@@ -8,6 +8,8 @@ const flipCards = {
     'second-ones': document.getElementById('second-ones')
 };
 
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+
 function updateClock() {
     const now = new Date();
     
@@ -46,3 +48,20 @@ updateClock();
 
 // 毎秒更新
 setInterval(updateClock, 1000);
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+        fullscreenBtn.textContent = '全画面解除';
+    } else {
+        document.exitFullscreen().catch(() => {});
+        fullscreenBtn.textContent = '全画面';
+    }
+}
+
+if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    document.addEventListener('fullscreenchange', () => {
+        fullscreenBtn.textContent = document.fullscreenElement ? '全画面解除' : '全画面';
+    });
+}
