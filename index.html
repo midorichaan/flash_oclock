@@ -8,6 +8,29 @@
 </head>
 <body>
     <button id="fullscreen-btn" class="fullscreen-btn" aria-label="全画面表示の切替">全画面</button>
+    <button id="settings-btn" class="settings-btn" aria-label="設定">⚙️</button>
+    
+    <div id="settings-panel" class="settings-panel hidden">
+        <div class="settings-content">
+            <h2>時報設定</h2>
+            <div class="alarm-list" id="alarm-list"></div>
+            <div class="add-alarm">
+                <input type="number" id="alarm-hour" min="0" max="23" placeholder="時" class="time-input">
+                <span>:</span>
+                <input type="number" id="alarm-minute" min="0" max="59" placeholder="分" class="time-input">
+                <button id="add-alarm-btn" class="add-btn">追加</button>
+            </div>
+            <button id="close-settings-btn" class="close-btn">閉じる</button>
+        </div>
+    </div>
+
+    <audio id="alert-sound" preload="auto">
+        <source src="alert.mp3" type="audio/mpeg">
+    </audio>
+    <div class="info-display">
+        <div id="date-display" class="date-display">0000年00月00日</div>
+        <div id="weekday-display" class="weekday-display">〇〇〇</div>
+    </div>
     <div class="clock-container">
         <div class="flip-unit">
             <div class="flip-card" id="hour-tens">
