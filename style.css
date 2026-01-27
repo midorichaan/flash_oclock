@@ -17,10 +17,10 @@ body {
 
 .clock-container {
     display: flex;
-    gap: 14px;
+    gap: 12px;
     align-items: center;
     background: rgba(0, 0, 0, 0.3);
-    padding: 56px 64px;
+    padding: 44px 52px;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
@@ -28,8 +28,8 @@ body {
 
 .flip-unit {
     position: relative;
-    width: 140px;
-    height: 200px;
+    width: 110px;
+    height: 160px;
 }
 
 .flip-card {
@@ -68,7 +68,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 120px;
+    font-size: 95px;
     font-weight: bold;
     color: #fff;
     background: linear-gradient(0deg, #2c3e50, #34495e);
@@ -88,7 +88,7 @@ body {
 }
 
 .separator {
-    font-size: 110px;
+    font-size: 85px;
     font-weight: bold;
     color: #fff;
     margin: 0 5px;
