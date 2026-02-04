@@ -41,6 +41,51 @@ function saveAlarmTimes() {
     localStorage.setItem('alarmTimes', JSON.stringify(alarmTimes));
 }
 
+// 読み上げテキストを生成
+function generateYomi(hour, minute) {
+    const period = hour < 12 ? '午前' : '午後';
+    let displayHour = hour % 12;
+    if (displayHour === 0) displayHour = 12;
+    
+    return `${period}、${displayHour}時${minute}分を、お知らせするのだ`;
+}
+
+// サーバーから音声を取得して再生
+function playServerVoice(hour, minute) {
+    const SERVER_URL = 'http://172.18.135.157';
+    const text = generateYomi(hour, minute);
+    const speaker = 3;
+
+    // 1. audio_query
+    fetch(`${SERVER_URL}/audio_query?text=${encodeURIComponent(text)}&speaker=${speaker}`, {
+        method: 'POST'
+    })
+    .then(response => {
+        if (!response.ok) throw new Error(`audio_query error! status: ${response.status}`);
+        return response.json();
+    })
+    .then(queryJson => {
+        // 2. synthesis
+        return fetch(`${SERVER_URL}/synthesis?speaker=${speaker}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(queryJson)
+        });
+    })
+    .then(response => {
+        if (!response.ok) throw new Error(`synthesis error! status: ${response.status}`);
+        return response.blob();
+    })
+    .then(blob => {
+        const audioUrl = URL.createObjectURL(blob);
+        const audio = new Audio(audioUrl);
+        audio.play().catch(e => console.error('再生エラー:', e));
+    })
+    .catch(e => console.error('音声合成エラー:', e));
+}
+
 // 時報リストを表示
 function renderAlarmList() {
     alarmList.innerHTML = '';
@@ -139,10 +184,7 @@ function updateClock() {
         if (currentHour === hour && currentMinute === minute) {
             // 同じ時刻で重複再生を防止
             if (lastAlertTime !== currentTimeKey) {
-                alertSound.currentTime = 0;
-                alertSound.play().catch(() => {
-                    console.log('音声再生に失敗しました。alert.mp3がtemplatesフォルダに存在することを確認してください。');
-                });
+                playServerVoice(hour, minute);
                 lastAlertTime = currentTimeKey;
             }
             break;
@@ -186,10 +228,8 @@ addAlarmBtn.addEventListener('click', addAlarm);
 
 // 音声テストボタン
 testSoundBtn.addEventListener('click', () => {
-    alertSound.currentTime = 0;
-    alertSound.play().catch(() => {
-        alert('音声再生に失敗しました。alert.mp3がtemplatesフォルダに存在することを確認してください。');
-    });
+    const now = new Date();
+    playServerVoice(now.getHours(), now.getMinutes());
 });
 
 // Enter キーで追加
