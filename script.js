@@ -12,6 +12,7 @@ const fullscreenBtn = document.getElementById('fullscreen-btn');
 const dateDisplay = document.getElementById('date-display');
 const weekdayDisplay = document.getElementById('weekday-display');
 const alertSound = document.getElementById('alert-sound');
+const hotaruSound = document.getElementById('hotaru-sound');
 const settingsBtn = document.getElementById('settings-btn');
 const settingsPanel = document.getElementById('settings-panel');
 const closeSettingsBtn = document.getElementById('close-settings-btn');
@@ -21,6 +22,7 @@ const alarmMinuteInput = document.getElementById('alarm-minute');
 const alarmList = document.getElementById('alarm-list');
 const clockContainer = document.querySelector('.clock-container');
 const testSoundBtn = document.getElementById('test-sound-btn');
+const testHotaruBtn = document.getElementById('test-hotaru-btn');
 
 const weekdayNames = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
 
@@ -84,6 +86,12 @@ function playServerVoice(hour, minute) {
         audio.play().catch(e => console.error('再生エラー:', e));
     })
     .catch(e => console.error('音声合成エラー:', e));
+}
+
+// 蛍の光を再生
+function playHotaru() {
+    hotaruSound.currentTime = 0;
+    hotaruSound.play().catch(e => console.error('蛍の光再生エラー:', e));
 }
 
 // 時報リストを表示
@@ -179,6 +187,14 @@ function updateClock() {
     const currentMinute = now.getMinutes();
     const currentTimeKey = `${currentHour}:${currentMinute}`;
 
+    // 20:50に蛍の光を再生
+    if (currentHour === 20 && currentMinute === 50) {
+        if (lastAlertTime !== currentTimeKey) {
+            playHotaru();
+            lastAlertTime = currentTimeKey;
+        }
+    }
+
     // 設定された時刻に達したら音声を再生
     for (const [hour, minute] of alarmTimes) {
         if (currentHour === hour && currentMinute === minute) {
@@ -230,6 +246,11 @@ addAlarmBtn.addEventListener('click', addAlarm);
 testSoundBtn.addEventListener('click', () => {
     const now = new Date();
     playServerVoice(now.getHours(), now.getMinutes());
+});
+
+// 蛍の光テストボタン
+testHotaruBtn.addEventListener('click', () => {
+    playHotaru();
 });
 
 // Enter キーで追加

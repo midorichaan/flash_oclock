@@ -21,12 +21,16 @@
                 <button id="add-alarm-btn" class="add-btn">追加</button>
             </div>
             <button id="test-sound-btn" class="test-btn">🔊 音声テスト</button>
+            <button id="test-hotaru-btn" class="test-btn">🎵 蛍の光テスト</button>
             <button id="close-settings-btn" class="close-btn">閉じる</button>
         </div>
     </div>
 
     <audio id="alert-sound" preload="auto">
         <source src="alert.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="hotaru-sound" preload="auto">
+        <source src="hotaru_hikari.mp3" type="audio/mpeg">
     </audio>
     <div class="info-display">
         <div id="date-display" class="date-display">0000年00月00日</div>
